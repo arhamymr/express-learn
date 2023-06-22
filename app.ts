@@ -17,6 +17,14 @@ app.use(express.static(path.join(__dirname, "public")));
 app.use("/", indexRouter);
 app.use("/users", usersRouter);
 
+app.get("/api/users", (req, res) => {
+  const users = [
+    { id: 1, name: "John Doe" },
+    { id: 2, name: "Jane Smith" },
+  ];
+  res.json(users);
+});
+
 // error handler
 app.use(function (err: any, req: Request, res: Response, next: NextFunction) {
   // set locals, only providing error in development
@@ -26,6 +34,14 @@ app.use(function (err: any, req: Request, res: Response, next: NextFunction) {
   // render the error page
   res.status(err.status || 500);
   res.render("error");
+});
+
+// Start the server
+
+const PORT = 1234;
+
+app.listen(PORT, () => {
+  console.log(`Server is running on http://localhost:${PORT}`);
 });
 
 export default app;

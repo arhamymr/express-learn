@@ -3,21 +3,21 @@ import puppeteer from "puppeteer";
 
 let router = express.Router();
 router.get(
-  "/:query",
+  "/:url",
   async function (req: Request, res: Response, next: NextFunction) {
     try {
-      const query = req.params.query;
+      const url = req.params.url;
 
       const browser = await puppeteer.launch({ headless: false });
       const page = await browser.newPage();
 
       // Navigate to Google
-      await page.goto("https://www.google.com");
+      await page.goto(url);
 
       // Enter the query in the search input and submit the form
       const textareaElement: any = await page.$("textarea.gLFyf");
       console.log(textareaElement, "textarea");
-      await textareaElement.type(query);
+      await textareaElement.type("query");
       await page.keyboard.press("Enter");
 
       // Wait for the search results to load
